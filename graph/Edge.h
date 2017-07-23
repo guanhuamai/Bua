@@ -5,7 +5,8 @@
 #ifndef BUA_EDGE_H
 #define BUA_EDGE_H
 
-class Edge{
+class Edge {
+protected:
     long long id;
     long long startNodeID;
     long long endNodeID;

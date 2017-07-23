@@ -12,7 +12,7 @@
 
 using namespace std;
 
-class ComplexEdge: Edge {
+class ComplexEdge: public Edge {
     Graph* graph;
     vector<QueryEdge> queryEdges;
     vector<vector<DistEdge>> distEdges;
@@ -30,6 +30,14 @@ public:
     void splitByAggregateValue(vector<PointOnEdge> landmarks);
 
     double calculateAggregateWithDistEdges(double pos);
+
+//    vector<QueryEdgePointer> queryEdgePointers();
+    vector<QueryEdge>& getQueryEdges();
+
+    vector<PointOnEdge> getLandmarks();
+    vector<PointOnEdge> getMovingObjects();
+
+    QueryEdge* getQueryEdge(PointOnEdge point);
 };
 
 

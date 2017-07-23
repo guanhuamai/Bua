@@ -13,6 +13,9 @@ using namespace std;
 // value on x axis means the distance from start node of edge
 // value on y axis means the distance from query point/ land mark to the point located on edge
 
+
+
+
 class QueryEdge{
 private:
     double leftX; // value on axis x of the left point
@@ -35,6 +38,10 @@ public:
     double intersectPositionOnX(QueryEdge e, double difference);  // return value less than zero is invalid
 
     double calDistByLine(double x);
+
+    double lowBound();
+
+    bool contains(double pos);
 };
 
 class DistEdge: public QueryEdge {

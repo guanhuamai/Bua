@@ -14,10 +14,16 @@ private:
     long long edgeID;
 
 public:
-    long long getID();
-    double getPosition();
-    long long getEdgeID();
+    long long getID() const ;
+    double getPosition() const ;
+    long long getEdgeID() const ;
 
+    bool operator()(const PointOnEdge& p1, const PointOnEdge& p2) const {
+        return p1.getID() < p2.getID();
+    }
+
+    PointOnEdge(long long movingObjectID, double position, long long adhereEdgeID):
+            id(movingObjectID), pos(position), edgeID(adhereEdgeID){}
 };
 
 

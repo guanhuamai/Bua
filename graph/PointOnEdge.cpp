@@ -5,14 +5,14 @@
 #include "PointOnEdge.h"
 
 
-long long PointOnEdge::getID(){
+long long PointOnEdge::getID() const {
     return id;
 }
 
-double PointOnEdge::getPosition(){
+double PointOnEdge::getPosition() const {
     return pos;
 }
 
-long long PointOnEdge::getEdgeID(){
+long long PointOnEdge::getEdgeID() const {
     return edgeID;
 }

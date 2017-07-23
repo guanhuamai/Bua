@@ -53,6 +53,13 @@ void Graph::constructEdgeIndex(vector<Edge>& edges){
 }
 
 
+Edge* Graph::getEdgeByID(long long edgeID){
+    return &edges[edgePositionWithID[edgeID]];
+}
+
+Node* Graph::getNodeByID(long long nodeID){
+    return &nodes[nodePositionWithID[nodeID]];
+}
 
 double Graph::dijkstraDist(long long startNodeID, long long endNodeID){
 

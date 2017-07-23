@@ -64,3 +64,10 @@ double QueryEdge::intersectPositionOnX(QueryEdge e, double difference) {
     return pos;
 }
 
+double QueryEdge::lowBound(){
+    return min(leftY, rightY);
+}
+
+bool QueryEdge::contains(double pos){
+    return (leftX <= pos || pos <= rightX);
+}

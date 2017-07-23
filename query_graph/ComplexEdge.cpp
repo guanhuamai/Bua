@@ -135,3 +135,40 @@ void ComplexEdge::aggregateDistEdges(){ // assume distEdges have been finished
     }
 
 }
+
+
+vector<QueryEdge>& ComplexEdge::getQueryEdges() {
+    return queryEdges;
+}
+
+//vector<QueryEdgePointer> ComplexEdge::queryEdgePointers(){
+//    vector<QueryEdgePointer> pointers;
+//    for(size_t i = 0; i < queryEdges.size(); i++){
+//        pointers.push_back(QueryEdgePointer(&queryEdges[i]));
+//    }
+//    return pointers;
+//}
+
+
+
+vector<PointOnEdge> ComplexEdge::getLandmarks(){
+    return landmarksOnEdge;
+}
+
+vector<PointOnEdge> ComplexEdge::getMovingObjects(){
+    return movingObjectsOnEdge;
+}
+
+QueryEdge* ComplexEdge::getQueryEdge(PointOnEdge point){
+    if (point.getEdgeID() == id){
+        for (int i = 0; i < queryEdges.size(); i++){
+            if (queryEdges[i].contains(point.getPosition() )){
+                return &queryEdges[i];
+            }
+        }
+        return NULL;
+    } else {
+        return NULL;
+    }
+}
+

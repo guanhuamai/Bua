@@ -24,6 +24,9 @@ private:
     void constructEdgeIndex(vector<Edge>& edges);
 public:
 
+    Edge* getEdgeByID(long long edgeID);
+    Node* getNodeByID(long long nodeID);
+
     void addEdge(Edge edge);
     void addEdge(long long id, long long startNodeID, long long endNodeID, double edgeLength);
     void addNode(long long id, double x, double y);
