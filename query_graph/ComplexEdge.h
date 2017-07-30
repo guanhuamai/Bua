@@ -21,22 +21,24 @@ class ComplexEdge: public Edge {
 
 
     vector<DistEdge> splitByDist(PointOnEdge landmark);
-    void splitByDist(vector<PointOnEdge> landmarks);
+    void splitByDist(vector<PointOnEdge*>& landmarks);
 
     void aggregateDistEdges();
 public:
     ComplexEdge(long long int id, long long int startNodeID, long long int endNodeID, double edgeLength);
 
-    void splitByAggregateValue(vector<PointOnEdge> landmarks);
+    string toString();
+
+    // split the edge by landmarks, queryEdges and distEdges will be defined accordingly
+    void splitByAggregateValue(vector<PointOnEdge*>& landmarks);
 
     double calculateAggregateWithDistEdges(double pos);
 
-//    vector<QueryEdgePointer> queryEdgePointers();
+    void addLandmarks(PointOnEdge* PointOnEdge);
+    // vector<QueryEdgePointer> queryEdgePointers();
     vector<QueryEdge>& getQueryEdges();
-
     vector<PointOnEdge> getLandmarks();
     vector<PointOnEdge> getMovingObjects();
-
     QueryEdge* getQueryEdge(PointOnEdge point);
 };
 

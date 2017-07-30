@@ -71,3 +71,23 @@ double QueryEdge::lowBound(){
 bool QueryEdge::contains(double pos){
     return (leftX <= pos || pos <= rightX);
 }
+
+
+string DistEdge::toString() {
+    string s;
+    s += "qid: " + to_string(queryID) + " extends from super ----\n"
+         + "-----------" + QueryEdge::toString();
+    return s;
+}
+
+
+string QueryEdge::toString() {
+    string s;
+    s += "edge id: " + to_string(edgeID)
+         + "left x: " + to_string(leftX)
+         + "left y: " + to_string(leftY)
+         + "right x: " + to_string(rightX)
+         + "right y: " + to_string(rightY)
+         + "\n";
+    return s;
+}

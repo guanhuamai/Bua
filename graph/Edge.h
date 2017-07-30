@@ -5,6 +5,11 @@
 #ifndef BUA_EDGE_H
 #define BUA_EDGE_H
 
+
+#include <string>
+
+using namespace std;
+
 class Edge {
 protected:
     long long id;
@@ -15,6 +20,7 @@ protected:
 public:
 
     Edge(long long id, long long startNodeID, long long endNodeID, double edgeLength);
+    virtual string toString();
     long long getID() const;
     long long  getStartNodeID() const ;
     long long getEndNodeID() const ;

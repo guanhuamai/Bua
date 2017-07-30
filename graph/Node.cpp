@@ -27,3 +27,11 @@ size_t Node::addAdjacentNode(Node *node) {
     adjacentNodes.push_back(node);
     return adjacentNodes.size();
 }
+
+
+vector<Node*> Node::getAdjacentNodes(){
+    return adjacentNodes;
+}
+vector<Edge*> Node::getAdjacentEdges(){
+    return adjacentEdges;
+}

@@ -5,6 +5,18 @@
 #include "Edge.h"
 
 
+string Edge::toString(){
+
+    string s;
+    s += "edge id: " + to_string(id)
+         + "start node: " + to_string(startNodeID)
+         + "end node: " + to_string(endNodeID)
+         + "edge length: " + to_string(edgeLength)
+         + "\n";
+    return s;
+
+}
+
 long long Edge::getID() const{
     return id;
 }

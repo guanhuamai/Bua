@@ -5,6 +5,9 @@
 #ifndef BUA_POINTONEDGE_H
 #define BUA_POINTONEDGE_H
 
+#include <string>
+
+using namespace std;
 
 class PointOnEdge{
 
@@ -24,6 +27,8 @@ public:
 
     PointOnEdge(long long movingObjectID, double position, long long adhereEdgeID):
             id(movingObjectID), pos(position), edgeID(adhereEdgeID){}
+
+    string toString();
 };
 
 

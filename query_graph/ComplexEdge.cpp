@@ -7,11 +7,8 @@
 #include <cmath>
 #include <algorithm>
 #include "../utility/ExperimentParameters.h"
-#include "../utility/BUAConstants.h"
 
 using namespace std;
-
-
 
 
 
@@ -56,21 +53,20 @@ vector<DistEdge> ComplexEdge::splitByDist(PointOnEdge landmark){
 }
 
 
-void ComplexEdge::splitByDist(vector<PointOnEdge> landmarks){
+void ComplexEdge::splitByDist(vector<PointOnEdge*>& landmarks){
     distEdges.clear();
     for (auto &landmark: landmarks){
-        distEdges.push_back(splitByDist(landmark));
+        distEdges.push_back(splitByDist(*landmark));
     }
 }
 
 
 ComplexEdge::ComplexEdge(long long int id, long long int startNodeID, long long int endNodeID, double edgeLength)
         : Edge(id, startNodeID, endNodeID, edgeLength) {
-    cout << "hello complex" << endl;
 }
 
 
-void ComplexEdge::splitByAggregateValue(vector<PointOnEdge> landmarks) {
+void ComplexEdge::splitByAggregateValue(vector<PointOnEdge*>& landmarks) {
     splitByDist(landmarks);
     aggregateDistEdges();
 }
@@ -172,3 +168,37 @@ QueryEdge* ComplexEdge::getQueryEdge(PointOnEdge point){
     }
 }
 
+void ComplexEdge::addLandmarks(PointOnEdge* landmark){
+    landmarksOnEdge.push_back(*landmark);
+}
+
+
+string ComplexEdge::toString(){
+    string s;
+
+    s += "edge info: " + Edge::toString();
+
+    s += "query edges: \n";
+    for(auto qEdge: queryEdges)
+        s += qEdge.toString();
+
+    s += "\n\n dist edges: \n";
+    for(auto dEdges: distEdges){
+        for(auto dEdge: dEdges)
+            s += dEdge.toString();
+        s += "------------\n";
+    }
+
+    s += "\n\n moving objects: \n";
+    for (auto mObj: movingObjectsOnEdge){
+        s += mObj.toString();
+    }
+
+    s += "\n\n landmarks objects: \n";
+    for (auto lmrk: landmarksOnEdge){
+        s += lmrk.toString();
+    }
+
+    s += "\n\n";
+    return s;
+}

@@ -17,7 +17,7 @@ private:
 public:
 
     static function<double (double, double)> aggFunction(){ return BUAConstants::maxFunction;}
-    static double initialAggValue(){ return BUAConstants::initialAggregateValueMax;}
+    static double initialAggValue(){ return BUAConstants::initialAggregateValueMax();}
 };
 
 #endif //BUA_EXPERIMENTPARAMETERS_H

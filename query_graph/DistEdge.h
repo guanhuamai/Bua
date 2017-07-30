@@ -6,6 +6,8 @@
 #define BUA_DISTEDGE_H
 
 #include <vector>
+#include <string>
+
 using namespace std;
 
 
@@ -33,6 +35,8 @@ public:
 
     QueryEdge(long long eid, double lx, double ly, double rx, double ry);
 
+    virtual string toString();
+
     vector<double> twoEnds();  // two ends of the segment, represented by a 4-tuple: (lx, ly, rx, ry)
 
     double intersectPositionOnX(QueryEdge e, double difference);  // return value less than zero is invalid
@@ -49,6 +53,7 @@ class DistEdge: public QueryEdge {
 
 public:
     DistEdge(long long qid, long long eid, double lx, double ly, double rx, double ry);
+    string toString();
 };
 
 

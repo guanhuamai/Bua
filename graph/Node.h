@@ -28,6 +28,8 @@ public:
     double getY();
     size_t addAdjacentEdge(Edge* edge);
     size_t addAdjacentNode(Node* node);
+    vector<Node*> getAdjacentNodes();
+    vector<Edge*> getAdjacentEdges();
 
 };
 
