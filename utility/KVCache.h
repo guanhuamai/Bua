@@ -23,7 +23,7 @@ using namespace qdbm;
 
 class KVCache{
 protected:
-    virtual string dbname;
+    string dbname;
 public:
     virtual string read(string key) = 0;
     virtual void write(string key, string value) = 0;

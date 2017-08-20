@@ -27,6 +27,8 @@ public:
     static inline char DELIMINATOR1(){return '\t';}
     static inline char DELIMINATOR2(){return ' ';}
     static inline string DEFAULT_DBNAME(){ return "default.database";}
+    static inline string EMPTY_STRING(){ return "";}
+    static inline double INVALID_DISTANCE(){ return -1;}
 
 };
 

@@ -7,6 +7,7 @@
 
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -27,6 +28,7 @@ public:
     double getEdgeLength() const ;
     long long getOppositeNodeID(long long nodeID) const ;
 
+    static vector<Edge*> edgeFromDiskFile(const string edgeFile);
 };
 
 

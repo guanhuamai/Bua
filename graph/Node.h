@@ -31,6 +31,8 @@ public:
     vector<Node*> getAdjacentNodes();
     vector<Edge*> getAdjacentEdges();
 
+    static vector<Node*> nodeFromDiskFile(const string nodeFile);
+
 };
 
 

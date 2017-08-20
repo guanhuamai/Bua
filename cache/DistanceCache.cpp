@@ -27,8 +27,13 @@ pair<long long, long long> DistanceCache::key2NodeID(string key){
 
 double DistanceCache::value2Distance(string value){
     istringstream distanceISS(value);
+    if (value == BUAConstants::EMPTY_STRING())
+        return BUAConstants::INVALID_DISTANCE();
+
+    long long readableBuffer = 0;
+    distanceISS >> readableBuffer;
     double res;
-    distanceISS >> res;
+    memcpy(&res, &readableBuffer, sizeof(readableBuffer));
     return res;
 }
 
@@ -43,17 +48,17 @@ string DistanceCache::distance2Value(double distance){
 
 double DistanceCache::read(long long snid, long long enid){
     string key = nodeID2Key(snid, enid);
-    return value2Distance(KVCache::read(key));
+    return value2Distance(KVCacheOnDisk::read(key));
 }
 
 void DistanceCache::write(long long snid, long long enid, double distance){
     string key = nodeID2Key(snid, enid);
     string value = distance2Value(distance);
-    KVCache::write(key, value);
+    KVCacheOnDisk::write(key, value);
 }
 
 
 void DistanceCache::erase(long long snid, long long enid){
     string key = nodeID2Key(snid, enid);
-    KVCache::erase(key);
+    KVCacheOnDisk::erase(key);
 }

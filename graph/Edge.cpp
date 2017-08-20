@@ -3,6 +3,8 @@
 //
 
 #include "Edge.h"
+#include "../utility/Utility.h"
+#include "../query_graph/ComplexEdge.h"
 
 
 string Edge::toString(){
@@ -49,4 +51,20 @@ long long Edge::getOppositeNodeID(long long nodeID) const {
     } else {
         return -1;
     }
+}
+
+
+vector<Edge*> Edge::edgeFromDiskFile(const string edgeFile){
+    vector<Edge*> res;
+    vector<string> edgesStr = Utility::readLines(edgeFile);
+    for (size_t i = 1; i < edgesStr.size(); i++){
+        vector<string> splitInfo = Utility::split(edgesStr[i], '\t');
+        long long edgeID = Utility::my_stoi(splitInfo[0]);
+        long long startNodeID = Utility::my_stoi(splitInfo[1]);
+        long long endNodeID = Utility::my_stoi(splitInfo[2]);
+        double edgeLength = Utility::my_stof(splitInfo[3]);
+        res.push_back(new ComplexEdge(edgeID, startNodeID, endNodeID, edgeLength)); // use ComplexEdge
+    }
+    cout << "input edges: " << res.size() << endl;
+    return res;
 }

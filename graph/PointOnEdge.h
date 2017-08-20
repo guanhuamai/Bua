@@ -6,6 +6,7 @@
 #define BUA_POINTONEDGE_H
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -28,6 +29,7 @@ public:
     PointOnEdge(long long movingObjectID, double position, long long adhereEdgeID):
             id(movingObjectID), pos(position), edgeID(adhereEdgeID){}
 
+    static vector<PointOnEdge*> queryPointFromDiskFile(const string queryPointFile);
     string toString();
 };
 

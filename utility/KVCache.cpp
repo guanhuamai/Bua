@@ -3,6 +3,7 @@
 //
 
 #include "KVCache.h"
+#include "BUAConstants.h"
 
 
 KVCacheOnDisk::KVCacheOnDisk(string dbname) {
@@ -11,25 +12,32 @@ KVCacheOnDisk::KVCacheOnDisk(string dbname) {
 }
 
 string KVCacheOnDisk::read(string key){
-
     try {
-        return string(vl->get((const char *) &key, sizeof(int), NULL));
+        char* valuePointer = vl->get(key.c_str(), (int) key.length(), NULL);
+        int  valueSize = vl->vsiz(key.c_str(), (int) key.length());
+        string res(valuePointer, (unsigned long) valueSize);
+        delete valuePointer;
+        return res;
     }catch (Villa_error& e) {
+        cout << e.message() << endl;
         if (e.code() != Villa::ENOITEM) throw e;
     }
 
-    return "";
+    return BUAConstants::EMPTY_STRING();
 }
 
 void KVCacheOnDisk::write(string key, string value){
     try {
-        vl->put(key.c_str(), sizeof(key), value.c_str(), sizeof(value), Villa::DOVER);
-    }catch (Villa_error& e) { throw e; }
+        vl->put(key.c_str(), (int) key.length(), value.c_str(), (int) value.length(), Villa::DOVER);
+    }catch (Villa_error& e) {
+        cout << e.message() << endl;
+        throw e;
+    }
 }
 
 void KVCacheOnDisk::erase(string key){
     try{
-        vl->out(key.c_str(), sizeof(key));
+        vl->out(key.c_str(), (int) key.length());
     }catch (Villa_error& e){
         if (e.code() != Villa::ENOITEM) throw e;
     }

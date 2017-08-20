@@ -10,6 +10,7 @@
 #include "Edge.h"
 #include "Node.h"
 #include "../cache/DistanceCache.h"
+#include "PointOnEdge.h"
 
 using namespace std;
 
@@ -40,6 +41,7 @@ public:
 
     void assignEdges(vector<Edge*> edges);
     void assignNodes(vector<Node*> nodes);
+    void assignQueryPoint(vector<PointOnEdge*> nodes);
 
 
     void buildGraph();

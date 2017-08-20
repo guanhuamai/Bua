@@ -3,7 +3,9 @@
 //
 
 #include "Node.h"
-
+#include "../utility/Utility.h"
+#include <iostream>
+using namespace std;
 
 
 Node::Node(long long id, double x, double y){
@@ -34,4 +36,19 @@ vector<Node*> Node::getAdjacentNodes(){
 }
 vector<Edge*> Node::getAdjacentEdges(){
     return adjacentEdges;
+}
+
+
+vector<Node*> Node::nodeFromDiskFile(const string nodeFile){
+    vector<Node*> res;
+    vector<string> nodesStr = Utility::readLines(nodeFile);
+    for (size_t i = 1; i < nodesStr.size(); i++){
+        vector<string> splitInfo = Utility::split(nodesStr[i], '\t');
+        long long nodeID = Utility::my_stoi(splitInfo[0]);
+        double nodeX = Utility::my_stof(splitInfo[1]);
+        double nodeY = Utility::my_stof(splitInfo[2]);
+        res.push_back(new Node(nodeID, nodeX, nodeY));
+    }
+    cout << "input nodes: " << res.size() << endl;
+    return  res;
 }

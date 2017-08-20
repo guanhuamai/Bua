@@ -6,6 +6,7 @@
 #include <cfloat>
 #include "Graph.h"
 #include "../utility/BUAConstants.h"
+#include "../query_graph/ComplexEdge.h"
 
 
 void Graph::buildGraph() {
@@ -159,6 +160,13 @@ void Graph::assignEdges(vector<Edge*> newEdges){
 void Graph::assignNodes(vector<Node*> newNodes){
     dropNodes();
     nodes = newNodes;
+}
+
+void Graph::assignQueryPoint(vector<PointOnEdge*> queryPoints){
+    for (auto queryPoint: queryPoints){
+        ComplexEdge* cEdge = (ComplexEdge*)getEdgeByID(queryPoint->getEdgeID());
+        cEdge->addLandmarks(queryPoint);
+    }
 }
 
 

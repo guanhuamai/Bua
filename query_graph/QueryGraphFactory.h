@@ -15,15 +15,13 @@
 using namespace std;
 
 class QueryGraphFactory {
-    static vector<Node*> nodeFromDiskFile(const string nodeFile);
-    static vector<Edge*> edgeFromDiskFile(const string edgeFile);
-    static vector<PointOnEdge*> queryPointFromDiskFile(const string queryPointFile);
     static void combine(Graph* graph, vector<Node*>& rawNodes,
                         vector<Edge*>& rawEdges, vector<PointOnEdge*>& queryPoints);
 
 
     static vector<PointOnEdge*> takeTop(vector<PointOnEdge*> elements, int n);
     static vector<PointOnEdge*> sampleLandmark(vector<PointOnEdge*> landmarks);
+
 public:
     static Graph* graphFromDiskFile(const string nodeFile, const string edgeFile, const string queryPointFile);
 };
