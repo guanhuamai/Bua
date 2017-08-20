@@ -6,6 +6,8 @@
 #define BUA_UTILITY_H
 
 
+#include "../test/BruteForceGraph.h"
+
 using namespace std;
 
 class Utility{
@@ -18,7 +20,8 @@ public:
     static vector<string> split(const std::string &s, char delim);
     static long long my_stoi(string s);
     static double my_stof(string s);
-
+    static double abs(double x);
+    static BruteForceGraph* buildBruteForceGraph(string nodeFile, string edgeFile, string landmarkFile);
 };
 
 #endif //BUA_UTILITY_H

@@ -3,6 +3,8 @@
 //
 
 #include "DistEdge.h"
+#include "../utility/Utility.h"
+#include "../utility/BUAConstants.h"
 
 
 QueryEdge::QueryEdge(long long eid, double lx, double ly, double rx, double ry) {
@@ -16,7 +18,13 @@ QueryEdge::QueryEdge(long long eid, double lx, double ly, double rx, double ry) 
 
 
 double QueryEdge::calDistByLine(double x){
+    if (!contains(x)){
+        return BUAConstants::INVALID_DISTANCE();
+    }
     pair<double, double> kAndB = QueryEdge::kbLine(twoEnds());
+    if (kAndB.first == BUAConstants::INFINITE_DOUBLE()){
+        return BUAConstants::INFINITE_DOUBLE();
+    }
     return kAndB.first * x + kAndB.second;  // return kx + b
 }
 
@@ -31,14 +39,28 @@ vector<double> QueryEdge::twoEnds(){
 
 
 pair<double, double> QueryEdge::kbLine(vector<double> twoEnds){
-    double k = (twoEnds[1] - twoEnds[3]) / (twoEnds[0] - twoEnds[2]);
+    double diffX = (twoEnds[0] - twoEnds[2]);
+    double diffY = (twoEnds[1] - twoEnds[3]);
+    if (Utility::abs(diffX) < BUAConstants::DEVIATION()){
+        return pair<double, double >(BUAConstants::INFINITE_DOUBLE(), twoEnds[0]);
+    }
+    double k = diffY / diffX;
     double b = twoEnds[1] - k * twoEnds[0];
     return pair<double, double >(k, b);
 }
 
 
 double QueryEdge::lineIntersection(double k1, double b1, double k2, double b2){
-    return (b2 - b1) / (k1 - k2);
+    if (k1 == BUAConstants::INFINITE_DOUBLE()){
+        double x = b1; // in kbLine function, when k1 = INF b1 saves the x value
+        return x;
+    }else if (k2 == BUAConstants::INFINITE_DOUBLE()){
+        double x = b2; // in kbLine function, when k1 = INF b1 saves the x value
+        return x;
+
+    } else{
+        return (b2 - b1) / (k1 - k2);
+    }
 }
 
 
@@ -52,7 +74,7 @@ double QueryEdge::intersectPositionOnX(QueryEdge e, double difference) {
 
     if (pos < ends[0] - difference || pos > (ends[2] + difference)
         || pos < eEnds[0] - difference || pos > (eEnds[2] + difference)){
-        return -1;
+        return BUAConstants::INVALID_DISTANCE();
     }
 
     // eliminates the difference

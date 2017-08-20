@@ -26,7 +26,6 @@ private:
 
     vector<pair<PointOnEdge, pair<double, double>>> top;
 
-
     vector<pair<PointOnEdge, pair<double, double>>> candidates;
 
     double kthDistance;

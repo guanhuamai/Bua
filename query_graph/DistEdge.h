@@ -27,6 +27,7 @@ private:
 
     long long edgeID;
 
+    // return k and b when the line is not vertical, otherwise return INF and x
     static pair<double, double> kbLine(vector<double> twoEnds);
 
     static double lineIntersection(double k1, double b1, double k2, double b2);

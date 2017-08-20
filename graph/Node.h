@@ -31,6 +31,8 @@ public:
     vector<Node*> getAdjacentNodes();
     vector<Edge*> getAdjacentEdges();
 
+    double euclidDist(Node* node);
+
     static vector<Node*> nodeFromDiskFile(const string nodeFile);
 
 };

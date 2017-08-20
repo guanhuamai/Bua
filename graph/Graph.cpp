@@ -4,8 +4,10 @@
 
 #include <queue>
 #include <cfloat>
+#include <assert.h>
 #include "Graph.h"
 #include "../utility/BUAConstants.h"
+#include "../utility/Utility.h"
 #include "../query_graph/ComplexEdge.h"
 
 
@@ -15,6 +17,8 @@ void Graph::buildGraph() {
     for(auto& edge: edges){
         Node* startNode = nodes[nodePositionWithID[edge->getStartNodeID()]];
         Node* endNode = nodes[nodePositionWithID[edge->getEndNodeID()]];
+        double d = startNode->euclidDist(endNode);
+        assert(Utility::abs(d - edge->getEdgeLength()) < BUAConstants::DEVIATION());
         startNode->addAdjacentNode(endNode);
         startNode->addAdjacentEdge(edge);
         endNode->addAdjacentNode(startNode);
@@ -62,6 +66,9 @@ Node* Graph::getNodeByID(long long nodeID){
     return nodes[nodePositionWithID[nodeID]];
 }
 
+PointOnEdge* Graph::getQueryPointByID(long long qID){
+    return queryPoints[qID];
+}
 
 struct DistElement {
     long long nodeID;
@@ -69,31 +76,26 @@ struct DistElement {
 
     DistElement(long long nid, double d): nodeID(nid), dist(d){}
 
-//    bool operator < (const DistElement& de) {
-//        return dist < de.dist;
-//    }
     DistElement(){
         nodeID = -1;
         dist = 0;
     }
 
     bool operator ()(const DistElement& de1, const DistElement& de2) {
-        return de1.dist < de2.dist;
+        return de1.dist > de2.dist;
     }
 };
 
 double Graph::n2NDist(long long startNodeID, long long endNodeID) {
-    if (startNodeID == endNodeID) return 0;
 
     double cacheDist = distanceCache->read(startNodeID, endNodeID);
-    if (cacheDist >= 0){
+    if (cacheDist != BUAConstants::INVALID_DISTANCE()){
         return cacheDist;
     }
 
     vector<bool > isVisit(nodes.size(), false);
     priority_queue<DistElement, vector<DistElement>, DistElement> heap;
     heap.push(DistElement(startNodeID, 0));
-    isVisit[startNodeID] = true;
 
     while (!heap.empty()) {
         while (!heap.empty() && isVisit[heap.top().nodeID] )
@@ -116,12 +118,12 @@ double Graph::n2NDist(long long startNodeID, long long endNodeID) {
         for (int i = 0; i < adjacentNodes.size(); i++ ){
             if (!isVisit[adjacentNodes[i]->getID()]){
                 heap.push(DistElement(adjacentNodes[i]->getID(),
-                                      adjacentEdges[i]->getEdgeLength()));
+                                      curNode.dist + adjacentEdges[i]->getEdgeLength()));
             }
         }
     }
 
-    return DBL_MAX;
+    return BUAConstants::INVALID_DISTANCE();
 }
 
 double Graph::p2NDist(long long eid, double pos, long long nodeID) {
@@ -162,11 +164,12 @@ void Graph::assignNodes(vector<Node*> newNodes){
     nodes = newNodes;
 }
 
-void Graph::assignQueryPoint(vector<PointOnEdge*> queryPoints){
-    for (auto queryPoint: queryPoints){
+void Graph::assignQueryPoint(vector<PointOnEdge*> newQueryPoints){
+    for (auto queryPoint: newQueryPoints){
         ComplexEdge* cEdge = (ComplexEdge*)getEdgeByID(queryPoint->getEdgeID());
         cEdge->addLandmarks(queryPoint);
     }
+    queryPoints = newQueryPoints;
 }
 
 

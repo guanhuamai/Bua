@@ -19,6 +19,7 @@ class Graph{
 private:
     vector<Edge*> edges;
     vector<Node*> nodes;
+    vector<PointOnEdge*> queryPoints;
     unordered_map<long long, size_t> nodePositionWithID;
     unordered_map<long long, size_t> edgePositionWithID;
     DistanceCache* distanceCache;
@@ -34,6 +35,7 @@ public:
 
     Edge* getEdgeByID(long long edgeID);
     Node* getNodeByID(long long nodeID);
+    PointOnEdge* getQueryPointByID(long long qID);
 
 //    void addEdge(Edge* edge);
     void addEdge(long long id, long long startNodeID, long long endNodeID, double edgeLength);
@@ -41,8 +43,7 @@ public:
 
     void assignEdges(vector<Edge*> edges);
     void assignNodes(vector<Node*> nodes);
-    void assignQueryPoint(vector<PointOnEdge*> nodes);
-
+    void assignQueryPoint(vector<PointOnEdge*> queryPoints);
 
     void buildGraph();
     double n2NDist(long long startNodeID, long long endNodeID);

@@ -2,7 +2,6 @@
 #include "bua/BuaList.h"
 #include "query_graph/QueryGraphFactory.h"
 #include "gtest/gtest.h"
-#include "test/UnitTest.h"
 
 void loadGraph(){
     string nodeFile = "../data/alaska.cnode";

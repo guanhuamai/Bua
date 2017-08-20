@@ -60,6 +60,8 @@ protected:
         string nodeFile = "../data/alaska.cnode";
         string edgeFile = "../data/alaska.cedge";
         string queryFile = "../data/alaska.lmrk";
+        graph = new Graph();
+        bfGraph = Utility::buildBruteForceGraph(nodeFile, edgeFile, queryFile);
 
         vector<Node*> nodes = Node::nodeFromDiskFile(nodeFile);
         vector<Edge*> edges = Edge::edgeFromDiskFile(edgeFile);
@@ -70,6 +72,7 @@ protected:
         graph->assignQueryPoint(landmarks);
 
         graph->buildGraph();
+        cout << "set up finished" << endl;
     }
 
     virtual void TearDown(){
@@ -78,21 +81,44 @@ protected:
     }
 
     Graph* graph;
+    BruteForceGraph* bfGraph;
 };
 
 
-TEST_F(GraphTest, DISTANCE){
-    graph->n2NDist(0, 0);
-    graph->n2NDist(200, 500);
-    graph->n2NDist(10, 10000);
-    graph->n2NDist(3000, 3005);
-    graph->n2NDist(600, 20000);
-}
+TEST_F(GraphTest, DISTANCE1){
+    long long qid1 = 0;
+    auto lmrk1 = graph->getQueryPointByID(qid1);
+    long long qid2 = 10;
+    auto lmrk2 = graph->getQueryPointByID(qid2);
+    long long qid3 = 100;
+    auto lmrk3 = graph->getQueryPointByID(qid3);
+    long long qid4 = 1000;
+    auto lmrk4 = graph->getQueryPointByID(qid4);
+    long long qid5 = 500;
+    auto lmrk5 = graph->getQueryPointByID(qid5);
 
+    EXPECT_FLOAT_EQ( bfGraph->landmarkDist(0,qid1),
+                     graph->p2NDist(lmrk1->getEdgeID(), lmrk1->getPosition(), 0));
+    EXPECT_FLOAT_EQ( bfGraph->landmarkDist(123,qid2),
+                     graph->p2NDist(lmrk2->getEdgeID(), lmrk2->getPosition(), 123));
+    EXPECT_FLOAT_EQ( bfGraph->landmarkDist(54,qid3),
+                     graph->p2NDist(lmrk3->getEdgeID(), lmrk3->getPosition(), 54));
+    EXPECT_FLOAT_EQ( bfGraph->landmarkDist(5676,qid4),
+                     graph->p2NDist(lmrk4->getEdgeID(), lmrk4->getPosition(), 5676));
+    EXPECT_FLOAT_EQ( bfGraph->landmarkDist(20000,qid5),
+                     graph->p2NDist(lmrk5->getEdgeID(), lmrk5->getPosition(), 20000));
+
+}
 
 TEST_F(GraphTest, DISTANCE2){
-
+    EXPECT_FLOAT_EQ( bfGraph->euclidDist(0,0), graph->n2NDist(0, 0));
+    EXPECT_FLOAT_EQ( bfGraph->euclidDist(10, 10000), graph->n2NDist(10, 10000));
+    EXPECT_FLOAT_EQ( bfGraph->euclidDist(3000, 3005), graph->n2NDist(3000, 3005));
+    EXPECT_FLOAT_EQ( graph->n2NDist(200, 500), bfGraph->euclidDist(200, 500));
+    EXPECT_FLOAT_EQ( bfGraph->euclidDist(600, 20000), graph->n2NDist(600, 20000));
 }
+
+
 
 
 

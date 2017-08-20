@@ -5,6 +5,8 @@
 #include "Node.h"
 #include "../utility/Utility.h"
 #include <iostream>
+#include <cmath>
+
 using namespace std;
 
 
@@ -52,3 +54,11 @@ vector<Node*> Node::nodeFromDiskFile(const string nodeFile){
     cout << "input nodes: " << res.size() << endl;
     return  res;
 }
+
+
+double Node::euclidDist(Node* node){
+    double diffX = this->x - node->getX();
+    double diffY = this->y - node->getY();
+    return sqrt(diffX * diffX + diffY * diffY);
+}
+

@@ -7,6 +7,8 @@
 
 
 #include <cfloat>
+#include <string>
+
 using namespace std;
 
 class BUAConstants{
@@ -14,6 +16,7 @@ private:
     BUAConstants(){};
 public:
 
+    static inline double INFINITE_DOUBLE() { return DBL_MAX; }
     static inline double DEVIATION() { return 0.00001; }
     static inline double initialAggregateValueMin() { return DBL_MAX; }
     static inline double initialAggregateValueMax() { return  DBL_MIN;}
