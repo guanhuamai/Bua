@@ -13,15 +13,14 @@
 using namespace std;
 
 class ComplexEdge: public Edge {
-    Graph* graph;
     vector<QueryEdge> queryEdges;
     vector<vector<DistEdge>> distEdges;
     vector<PointOnEdge> movingObjectsOnEdge; // moving objects adheres on the edge, can be empty
     vector<PointOnEdge> landmarksOnEdge;
 
 
-    vector<DistEdge> splitByDist(PointOnEdge landmark);
-    void splitByDist(vector<PointOnEdge*>& landmarks);
+    vector<DistEdge> splitByDist(PointOnEdge landmark, Graph* graph);
+    void splitByDist(vector<PointOnEdge*>& landmarks, Graph* graph);
 
     void aggregateDistEdges();
 public:
@@ -30,13 +29,13 @@ public:
     string toString();
 
     // split the edge by landmarks, queryEdges and distEdges will be defined accordingly
-    void splitByAggregateValue(vector<PointOnEdge*>& landmarks);
+    void splitByAggregateValue(vector<PointOnEdge*>& landmarks, Graph* graph);
 
     double calculateAggregateWithDistEdges(double pos);
 
     void addLandmarks(PointOnEdge* PointOnEdge);
     // vector<QueryEdgePointer> queryEdgePointers();
-    vector<QueryEdge>& getQueryEdges();
+    vector<QueryEdge> getQueryEdges();
     vector<PointOnEdge> getLandmarks();
     vector<PointOnEdge> getMovingObjects();
     QueryEdge* getQueryEdge(PointOnEdge point);

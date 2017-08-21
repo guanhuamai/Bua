@@ -14,6 +14,7 @@ void QueryGraphFactory::combine(Graph* graph, vector<Node*>& rawNodes,
                                 vector<Edge*>& rawEdges, vector<PointOnEdge*>& queryPoints){
     graph->assignNodes(rawNodes);
     graph->assignEdges(rawEdges);
+    graph->assignQueryPoint(queryPoints);
     graph->buildGraph(); // build graph
 
     for (auto queryPoint: queryPoints){
@@ -31,7 +32,7 @@ void QueryGraphFactory::combine(Graph* graph, vector<Node*>& rawNodes,
 
     for (auto edge: rawEdges){  // construct queryEdge information by split
         ComplexEdge* cEdge = (ComplexEdge*)edge;
-        cEdge->splitByAggregateValue(queryPoints);
+        cEdge->splitByAggregateValue(queryPoints, graph);
     }
 }
 

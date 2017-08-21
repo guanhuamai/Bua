@@ -12,7 +12,7 @@ using namespace std;
 
 
 
-vector<DistEdge> ComplexEdge::splitByDist(PointOnEdge landmark){
+vector<DistEdge> ComplexEdge::splitByDist(PointOnEdge landmark, Graph* graph){
     vector<DistEdge> segmentDistEdges;
     double ds = graph->p2NDist(landmark.getEdgeID(), landmark.getPosition(), getStartNodeID());
     double de = graph->p2NDist(landmark.getEdgeID(), landmark.getPosition(), getEndNodeID());
@@ -53,10 +53,10 @@ vector<DistEdge> ComplexEdge::splitByDist(PointOnEdge landmark){
 }
 
 
-void ComplexEdge::splitByDist(vector<PointOnEdge*>& landmarks){
+void ComplexEdge::splitByDist(vector<PointOnEdge*>& landmarks, Graph* graph){
     distEdges.clear();
     for (auto &landmark: landmarks){
-        distEdges.push_back(splitByDist(*landmark));
+        distEdges.push_back(splitByDist(*landmark, graph));
     }
 }
 
@@ -66,8 +66,8 @@ ComplexEdge::ComplexEdge(long long int id, long long int startNodeID, long long 
 }
 
 
-void ComplexEdge::splitByAggregateValue(vector<PointOnEdge*>& landmarks) {
-    splitByDist(landmarks);
+void ComplexEdge::splitByAggregateValue(vector<PointOnEdge*>& landmarks, Graph* graph) {
+    splitByDist(landmarks, graph);
     aggregateDistEdges();
 }
 
@@ -133,7 +133,7 @@ void ComplexEdge::aggregateDistEdges(){ // assume distEdges have been finished
 }
 
 
-vector<QueryEdge>& ComplexEdge::getQueryEdges() {
+vector<QueryEdge> ComplexEdge::getQueryEdges() {
     return queryEdges;
 }
 

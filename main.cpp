@@ -14,5 +14,5 @@ void loadGraph(){
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    return RUN_ALL_TESTS(); // unit test must rely on a cpp, otherwise google test can't find the test..
 }
